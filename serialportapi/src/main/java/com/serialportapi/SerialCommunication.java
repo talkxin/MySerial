@@ -25,6 +25,8 @@ import com.serialportapi.usbdriver_api.UsbSerialProber;
 /**
  * 入口方法
  *
+ * 测试tag1.3是否好用
+ *
  * @author talkliu
  */
 public class SerialCommunication {
