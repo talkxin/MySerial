@@ -1,4 +1,4 @@
-package com.serialportapi.thread;
+package com.serialportapi.mean;
 
 /**
  * 各种状态及状态值

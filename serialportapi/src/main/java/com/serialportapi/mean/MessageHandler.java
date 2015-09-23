@@ -3,8 +3,6 @@ package com.serialportapi.mean;
 
 import android.content.Context;
 
-import com.serialportapi.thread.Event;
-
 /**
  * 获取byte处理的handler
  *
