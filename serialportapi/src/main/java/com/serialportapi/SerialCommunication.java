@@ -36,7 +36,7 @@ public abstract class SerialCommunication {
      * @param context
      * @param handler
      */
-    SerialCommunication(Context context, MessageHandler handler) {
+    protected SerialCommunication(Context context, MessageHandler handler) {
         this.context = context;
         this.handler = handler;
     }
