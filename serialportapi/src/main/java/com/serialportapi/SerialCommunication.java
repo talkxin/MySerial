@@ -9,9 +9,13 @@ import java.util.List;
 
 /**
  * 串口接口类，接收usb请求与232串口请求
+ * 可以根据串口借口类进行自定义数据接收
  */
 public abstract class SerialCommunication {
-
+    /**
+     * 过滤器
+     */
+    protected MessageDecoder decoder = null;
 
     /**
      * usb驱动器标识
@@ -42,11 +46,20 @@ public abstract class SerialCommunication {
     }
 
     /**
-     * 过滤类
+     * 設置自定义过滤器
      *
      * @param decoder
      */
     public abstract void setDecoder(MessageDecoder decoder);
+
+    /**
+     * 设置默认过滤器
+     *
+     * @param md
+     */
+    public void setDecoder(int md) {
+
+    }
 
     /**
      * 获取驱动器列表

@@ -15,6 +15,11 @@ import java.util.List;
  */
 public class Serial232 extends SerialCommunication {
     /**
+     * 设备目录
+     */
+    private final String devurl = "/dev/";
+
+    /**
      * 构造方法，接收处理的handler
      *
      * @param context
@@ -26,7 +31,7 @@ public class Serial232 extends SerialCommunication {
 
     @Override
     public void setDecoder(MessageDecoder decoder) {
-
+        this.decoder = decoder;
     }
 
     @Override
