@@ -127,6 +127,11 @@ public class DataQueue extends RunnableTask implements RunnableTaskIf,
         //handler.messageEvent(context, event, "任务完成");
     }
 
+    @Override
+    public int getSleep() {
+        return 0;
+    }
+
     /**
      * 输出至//handler
      */
