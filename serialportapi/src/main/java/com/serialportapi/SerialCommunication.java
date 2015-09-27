@@ -3,7 +3,6 @@ package com.serialportapi;
 import android.content.Context;
 
 import com.serialportapi.mean.MessageDecoder;
-import com.serialportapi.mean.MessageHandler;
 
 import java.util.List;
 
@@ -32,17 +31,14 @@ public abstract class SerialCommunication {
     /**
      * 处理的handler，接收过滤后的数据
      */
-    private MessageHandler handler;
 
     /**
      * 构造方法，接收处理的handler
      *
      * @param context
-     * @param handler
      */
-    protected SerialCommunication(Context context, MessageHandler handler) {
+    protected SerialCommunication(Context context) {
         this.context = context;
-        this.handler = handler;
     }
 
     /**
@@ -79,6 +75,16 @@ public abstract class SerialCommunication {
     public abstract boolean initSerialPort(String devName, int baudrate);
 
     /**
+     * 开始串口通讯
+     *
+     * @param devName  可以通过驱动器列表获取，也可以直接声明
+     * @param baudrate 波特率
+     * @param sleep 设置休眠时间
+     * @return
+     */
+    public abstract boolean initSerialPort(String devName, int baudrate,int sleep);
+
+    /**
      * 发送信息
      *
      * @param commend 延迟时间
@@ -93,10 +99,4 @@ public abstract class SerialCommunication {
      */
     public abstract boolean closeDevice();
 
-    /**
-     * 設置休眠時間
-     *
-     * @param sleep 获取数据的延迟时间
-     */
-    public abstract void setSleep(final int sleep);
 }

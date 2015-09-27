@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.serialportapi.SerialCommunication;
 import com.serialportapi.mean.MessageDecoder;
-import com.serialportapi.mean.MessageHandler;
 
 import java.util.List;
 
@@ -23,10 +22,9 @@ public class Serial232 extends SerialCommunication {
      * 构造方法，接收处理的handler
      *
      * @param context
-     * @param handler
      */
-    Serial232(Context context, MessageHandler handler) {
-        super(context, handler);
+    Serial232(Context context) {
+        super(context);
     }
 
     @Override
@@ -45,6 +43,11 @@ public class Serial232 extends SerialCommunication {
     }
 
     @Override
+    public boolean initSerialPort(String devName, int baudrate, int sleep) {
+        return false;
+    }
+
+    @Override
     public boolean sendCommend(int commend, byte[] data) {
         return false;
     }
@@ -54,8 +57,4 @@ public class Serial232 extends SerialCommunication {
         return false;
     }
 
-    @Override
-    public void setSleep(int sleep) {
-
-    }
 }

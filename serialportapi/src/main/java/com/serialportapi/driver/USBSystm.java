@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.serialportapi.SerialCommunication;
 import com.serialportapi.mean.MessageDecoder;
-import com.serialportapi.mean.MessageHandler;
 
 import java.util.List;
 
@@ -18,10 +17,9 @@ public class USBSystm extends SerialCommunication {
      * 构造方法，接收处理的handler
      *
      * @param context
-     * @param handler
      */
-    protected USBSystm(Context context, MessageHandler handler) {
-        super(context, handler);
+    protected USBSystm(Context context) {
+        super(context);
     }
 
     @Override
@@ -40,6 +38,11 @@ public class USBSystm extends SerialCommunication {
     }
 
     @Override
+    public boolean initSerialPort(String devName, int baudrate, int sleep) {
+        return false;
+    }
+
+    @Override
     public boolean sendCommend(int commend, byte[] data) {
         return false;
     }
@@ -49,8 +52,4 @@ public class USBSystm extends SerialCommunication {
         return false;
     }
 
-    @Override
-    public void setSleep(int sleep) {
-
-    }
 }
