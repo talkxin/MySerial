@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.serialportapi.SerialCommunication;
 import com.serialportapi.mean.MessageDecoder;
+import com.serialportapi.mean.MessageHandler;
 
 import java.util.List;
 
@@ -19,8 +20,8 @@ public class USBJni extends SerialCommunication {
      *
      * @param context
      */
-    protected USBJni(Context context) {
-        super(context);
+    protected USBJni(Context context, MessageHandler handler) {
+        super(context, handler);
     }
 
     @Override
@@ -39,11 +40,6 @@ public class USBJni extends SerialCommunication {
     }
 
     @Override
-    public boolean initSerialPort(String devName, int baudrate, int sleep) {
-        return false;
-    }
-
-    @Override
     public boolean sendCommend(int commend, byte[] data) {
         return false;
     }
@@ -52,5 +48,4 @@ public class USBJni extends SerialCommunication {
     public boolean closeDevice() {
         return false;
     }
-
 }

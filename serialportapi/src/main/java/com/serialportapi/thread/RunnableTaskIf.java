@@ -22,6 +22,11 @@ public interface RunnableTaskIf {
     public void taskCompletion();
 
     /**
+     * 設置休眠時間
+     */
+    public void setSleep(int sleep);
+
+    /**
      * 获取休眠时间
      *
      * @return

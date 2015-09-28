@@ -2,7 +2,10 @@ package com.serialportapi;
 
 import android.content.Context;
 
+import com.serialportapi.common.ConnectedTask;
+import com.serialportapi.common.DataQueue;
 import com.serialportapi.mean.MessageDecoder;
+import com.serialportapi.mean.MessageHandler;
 
 import java.util.List;
 
@@ -27,18 +30,29 @@ public abstract class SerialCommunication {
     /**
      * Context
      */
-    private Context context;
+    protected Context context;
     /**
      * 处理的handler，接收过滤后的数据
      */
+    protected MessageHandler handler;
+
+    /**
+     * 通信类
+     */
+    protected ConnectedTask mConnectedTask;
+    /**
+     * 数据队列
+     */
+    protected DataQueue outQueue;
 
     /**
      * 构造方法，接收处理的handler
      *
      * @param context
      */
-    protected SerialCommunication(Context context) {
+    protected SerialCommunication(Context context, MessageHandler handler) {
         this.context = context;
+        this.handler = handler;
     }
 
     /**
@@ -75,16 +89,6 @@ public abstract class SerialCommunication {
     public abstract boolean initSerialPort(String devName, int baudrate);
 
     /**
-     * 开始串口通讯
-     *
-     * @param devName  可以通过驱动器列表获取，也可以直接声明
-     * @param baudrate 波特率
-     * @param sleep 设置休眠时间
-     * @return
-     */
-    public abstract boolean initSerialPort(String devName, int baudrate,int sleep);
-
-    /**
      * 发送信息
      *
      * @param commend 延迟时间
@@ -98,5 +102,20 @@ public abstract class SerialCommunication {
      * @return
      */
     public abstract boolean closeDevice();
+
+    /**
+     * 设置休眠时间
+     *
+     * @param sleep
+     * @return
+     */
+    public boolean setSleep(int sleep) {
+        if (mConnectedTask != null) {
+            mConnectedTask.setSleep(sleep);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

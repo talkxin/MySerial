@@ -35,6 +35,7 @@ public class ConnectedTask extends RunnableTask implements RunnableTaskIf {
         super(context, handler);
         this.handler = handler;
         this.context = context;
+        this.sleep = sleep;
         this.setRunnableTask(this);
     }
 
@@ -133,6 +134,11 @@ public class ConnectedTask extends RunnableTask implements RunnableTaskIf {
         }
         this.event = Event.COMPLETION;
         handler.messageEvent(context, event, "任务完成");
+    }
+
+    @Override
+    public void setSleep(int sleep) {
+        this.sleep = sleep;
     }
 
     @Override
