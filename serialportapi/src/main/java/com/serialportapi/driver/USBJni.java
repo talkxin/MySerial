@@ -1,11 +1,14 @@
 package com.serialportapi.driver;
 
 import android.content.Context;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 
 import com.serialportapi.SerialCommunication;
 import com.serialportapi.mean.MessageDecoder;
 import com.serialportapi.mean.MessageHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +18,8 @@ import java.util.List;
  * 使用前需要root，效率会比系统高
  */
 public class USBJni extends SerialCommunication {
+    private List<String> drivers;
+
     /**
      * 构造方法，接收处理的handler
      *
@@ -22,6 +27,12 @@ public class USBJni extends SerialCommunication {
      */
     protected USBJni(Context context, MessageHandler handler) {
         super(context, handler);
+        drivers = new ArrayList<String>();
+        UsbManager mUsbManager = (UsbManager) context
+                .getSystemService(Context.USB_SERVICE);
+        for (final UsbDevice device : mUsbManager.getDeviceList().values()) {
+            drivers.add(device.getDeviceName());
+        }
     }
 
     @Override
