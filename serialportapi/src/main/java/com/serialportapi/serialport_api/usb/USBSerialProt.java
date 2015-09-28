@@ -9,11 +9,11 @@ import java.io.FileDescriptor;
 public class USBSerialProt {
 
     // JNI
-    private native static FileDescriptor open(String path, int baudrate, int flags);
-
-    public native void close();
-
-    static {
-        System.loadLibrary("usbserial_port");
-    }
+//    private native static FileDescriptor open(String path, int baudrate, int flags);
+//
+//    public native void close();
+//
+//    static {
+//        System.loadLibrary("usbserial_port");
+//    }
 }

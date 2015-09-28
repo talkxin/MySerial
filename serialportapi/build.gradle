@@ -21,7 +21,6 @@ android {
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
         def ndkDir = properties.getProperty('ndk.dir')
-        println("$ndkDir/ndk-build")
         commandLine "$ndkDir/ndk-build",
                 'NDK_PROJECT_PATH=build',
                 'APP_BUILD_SCRIPT=src/main/jni/Android.mk'
@@ -59,5 +58,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar','*.so'])
+    compile fileTree(dir: new File(buildDir, 'libs'), include: ['*.jar','*.so'])
     compile 'com.android.support:appcompat-v7:22.2.0'
 }
