@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.serialportapi.SerialCommunication;
+import com.serialportapi.mean.MessageHandler;
 
 
 /**
@@ -13,11 +14,13 @@ import com.serialportapi.SerialCommunication;
  */
 public class RunnableTask implements Runnable {
     private RunnableTaskIf task;
+    private MessageHandler handler;
     private Context context;
     public Event event;// 运行状态
     public Thread thread;
 
-    public RunnableTask(Context context) {
+    public RunnableTask(Context context, MessageHandler handler) {
+        this.handler = handler;
         this.context = context;
     }
 
@@ -41,13 +44,13 @@ public class RunnableTask implements Runnable {
                 }
                 do {
                     task.taskRunning();
-//                    Thread.sleep(SerialCommunication.sleep);
+                    Thread.sleep(task.getSleep());
                 } while (event == Event.RUNNING);
             } catch (Exception e) {
-                //handler.messageEvent(context, event, task.getClass().toString());
+                handler.messageEvent(context, event, task.getClass().toString());
             }
             // 任务停止
-            //handler.messageEvent(context, event = Event.STOPPED, "任务停止");
+            handler.messageEvent(context, event = Event.STOPPED, "任务停止");
         }
     }
 
@@ -61,10 +64,10 @@ public class RunnableTask implements Runnable {
             try {
                 return task.taskPreparing();
             } catch (Exception e) {
-                //handler.messageEvent(context, Event.EXCEPTION, "任务异常1");
+                handler.messageEvent(context, Event.EXCEPTION, "任务异常1");
             }
         } else {
-            //handler.messageEvent(context, Event.EXCEPTION, "任务异常2");
+            handler.messageEvent(context, Event.EXCEPTION, "任务异常2");
         }
         return false;
     }
@@ -83,6 +86,6 @@ public class RunnableTask implements Runnable {
      */
     public void shutdown() {
         event = Event.STOPPING;
-        //handler.messageEvent(context, event, "停止任务中");
+        handler.messageEvent(context, event, "停止任务中");
     }
 }

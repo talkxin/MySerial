@@ -6,6 +6,7 @@ import java.io.InputStream;
 import android.content.Context;
 import android.util.Log;
 
+import com.serialportapi.mean.MessageHandler;
 import com.serialportapi.serialport_api.SerialPort;
 import com.serialportapi.thread.Event;
 import com.serialportapi.thread.RunnableTask;
@@ -23,15 +24,16 @@ public class ConnectedTask extends RunnableTask implements RunnableTaskIf {
     private SerialPort sp;// 串口
     private UsbSerialDriver sDriver;// usb 串口
     private InputStream mSPInput;// 数据输入
+    private MessageHandler handler;
     private Context context;
     private int readBytes;
     private int sleep = 0;
     private int bufferLength = 1024;
     private byte[] buffer = new byte[bufferLength];// 缓存
 
-    public ConnectedTask(Context context, int sleep) {
-        super(context);
-        this.sleep = sleep;
+    public ConnectedTask(Context context, MessageHandler handler) {
+        super(context, handler);
+        this.handler = handler;
         this.context = context;
         this.setRunnableTask(this);
     }
@@ -95,7 +97,7 @@ public class ConnectedTask extends RunnableTask implements RunnableTaskIf {
     public boolean taskPreparing() {
         // TODO Auto-generated method stub
         this.event = Event.PREPARING;
-        //handler.messageEvent(context, event, "准备开始");
+        handler.messageEvent(context, event, "准备开始");
         return true;
     }
 
@@ -119,7 +121,7 @@ public class ConnectedTask extends RunnableTask implements RunnableTaskIf {
                 }
             }
         } catch (IOException e) {
-            //handler.messageEvent(context, Event.EXCEPTION, "数据队列异常");
+            handler.messageEvent(context, Event.EXCEPTION, "数据队列异常");
         }
     }
 
@@ -130,7 +132,7 @@ public class ConnectedTask extends RunnableTask implements RunnableTaskIf {
             sp = null;
         }
         this.event = Event.COMPLETION;
-        //handler.messageEvent(context, event, "任务完成");
+        handler.messageEvent(context, event, "任务完成");
     }
 
     @Override

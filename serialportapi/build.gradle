@@ -15,6 +15,12 @@ android {
             abiFilters "armeabi", "armeabi-v7a", "x86"
 
         }
+        ndk {
+            moduleName "usbserial_port"
+            ldLibs "log", "z", "m"
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+
+        }
     }
     buildTypes {
         release {
