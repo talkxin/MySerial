@@ -8,6 +8,7 @@ import com.serialportapi.common.DataQueue;
 import com.serialportapi.mean.MessageDecoder;
 import com.serialportapi.mean.MessageHandler;
 import com.serialportapi.serialport_api.SerialPort;
+import com.serialportapi.serialport_api.SerialPortFinder;
 import com.serialportapi.thread.Event;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by young on 15-9-23.
@@ -53,14 +55,13 @@ public class Serial232 extends SerialCommunication {
 
     @Override
     public List<String> getDriverList(int driver) {
-        File root = new File(devurl);
-        File[] files = root.listFiles();
         List<String> drivers = new ArrayList<String>();
-        for (File file : files) {
-            if (file.isDirectory())
-                drivers.add(file.getAbsolutePath());
+        SerialPortFinder sp = new SerialPortFinder();
+        String[] sd = sp.getAllDevicesPath();
+        for (String path : sd) {
+            drivers.add(path);
         }
-        return null;
+        return drivers;
     }
 
     @Override
