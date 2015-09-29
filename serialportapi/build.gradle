@@ -17,7 +17,9 @@ android {
 //        }
     }
     sourceSets.main.jni.srcDirs = []
+    //自定义Android.mk
     task ndkBuild(type: Exec, description: 'Compile JNI source via NDK') {
+        //获取local.properties文件属性
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
         def ndkDir = properties.getProperty('ndk.dir')
@@ -26,28 +28,18 @@ android {
                 'APP_BUILD_SCRIPT=src/main/jni/Android.mk'
 //                'NDK_APPLICATION_MK=src/main/jni/Application.mk'
     }
+    //设置编译目录
     task ndkLibsToJar(type: Zip, dependsOn: 'ndkBuild', description: 'Create a JAR of the native libs') {
         destinationDir new File(buildDir, 'libs')
         baseName 'ndk-libs'
         extension 'jar'
         from(new File(buildDir, 'libs')) { include '**/*.so' }
-        into 'lib/'
+        into 'libs/'
     }
     tasks.withType(JavaCompile) {
         compileTask -> compileTask.dependsOn ndkLibsToJar
     }
-//    tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
-//    task ndkLibsToJar(type: Zip, dependsOn: 'ndkBuild', description: 'Create a JAR of the native libs') {
-//        destinationDir new File(buildDir, 'libs')
-//        baseName 'ndk-libs'
-//        extension 'jar'
-//        from(new File(buildDir, 'libs')) { include '**/*.so' }
-//        into 'lib/'
-//    }
-//    task ndkBuild(type: Exec, description: 'Compile JNI source via NDK') {
-//        println('executing ndkBuild')
-//        commandLine "/bin/echo", "hello world"
-//    }
+    
     buildTypes {
         release {
             minifyEnabled false
@@ -57,7 +49,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar','*.so'])
-    compile fileTree(dir: new File(buildDir, 'libs'), include: ['*.jar','*.so'])
+    compile fileTree(dir: 'libs', include: ['*.jar', '*.so'])
+    //加入自定义编译的so
+    compile fileTree(dir: new File(buildDir, 'libs'), include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
 }
