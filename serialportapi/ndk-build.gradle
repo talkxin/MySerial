@@ -34,7 +34,10 @@ android {
 //        compileTask -> compileTask.dependsOn useJar ? ndkLibsToJar : ndkBuild
 //    }
     tasks.withType(JavaCompile) {
-        compileTask -> compileTask.dependsOn ndkLibsToJar
+            //        compileTask -> compileTask.dependsOn ndkLibsToJar
+        compileTask ->
+            compileTask.dependsOn useJar ? ndkLibsToJar : ndkBuild
+            options.encoding = "UTF-8"//解决编码问题
     }
 
     buildTypes {
