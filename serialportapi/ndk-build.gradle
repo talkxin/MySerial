@@ -17,8 +17,8 @@ android {
         def ndkDir = properties.getProperty('ndk.dir')
         commandLine "$ndkDir/ndk-build",
                 "NDK_PROJECT_PATH=build",
-                "APP_BUILD_SCRIPT=$jniDir/Android.mk"
-//                'NDK_APPLICATION_MK=src/main/jni/Application.mk'
+                "APP_BUILD_SCRIPT=$jniDir/Android.mk",
+                "NDK_APPLICATION_MK=$jniDir/Application.mk"
     }
     //设置将NDK打包成jar
     task ndkLibsToJar(type: Zip, dependsOn: 'ndkBuild', description: 'Create a JAR of the native libs') {
