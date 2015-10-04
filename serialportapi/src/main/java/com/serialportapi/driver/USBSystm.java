@@ -39,7 +39,7 @@ public class USBSystm extends SerialCommunication {
      *
      * @param context
      */
-    protected USBSystm(Context context, MessageHandler handler) {
+    public USBSystm(Context context, MessageHandler handler) {
         super(context, handler);
         UsbManager mUsbManager = (UsbManager) context
                 .getSystemService(Context.USB_SERVICE);
